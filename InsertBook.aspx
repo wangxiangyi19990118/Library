@@ -93,6 +93,8 @@
                         <th>数量</th>
                         <th>分类</th>
                         <th>借阅者</th>
+                         <th>借书日期</th>
+                         <th>还书日期</th>
                     </tr>
             </HeaderTemplate>
 
@@ -105,6 +107,9 @@
                      <td><%# Eval("count")%></td>
                      <td><%# Eval("class1")%></td>
                      <td><%# Eval("name")%></td>
+                     <td><%# Eval("datetime1")%></td>
+                     <td><%# Eval("datetime2")%></td>
+
                      <td><asp:LinkButton ID="lbtDelete" runat="server" Text="删除" CommandName="Delete" CommandArgument='<%#Eval("id") %>'></asp:LinkButton></td>
                     <td><asp:LinkButton ID="lbtEditor" runat="server" Text="修改" PostBackUrl='<%#"EditorBorrow.aspx?id="+Eval("id") %>'></asp:LinkButton></td>
 

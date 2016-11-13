@@ -70,11 +70,17 @@ public partial class Borrow1 : System.Web.UI.Page
             DataTable dt1 = new DataTable();
             dt1 = Class1.Put1(sql3);
             long count2 = Convert.ToInt64(dt1.Rows[0][5].ToString());
-            int count3;
-            if (bookcount != "0         ")
+            int count3,count4;
+            if (bookcount != "0")
+            {
                 count3 = Convert.ToInt32(count1) + Convert.ToInt32(bookcount);
-            else count3 = 0;
-            int count4 =Convert .ToInt32 ( count1) + count3;
+                count4 = count3;
+            }
+            else
+            {
+                count3 = 0;
+                count4 = Convert.ToInt32(count1);
+            }
             if (count1 >= count2 || count2 == 1 || count1 == 0||count3>10)
             {
                 Response.Write("<script>alert('所借数目大于馆藏数目！或者您借阅了保存本！或者借阅数目不为0！或者已经超过借阅上限！'),location='Borrowbook.aspx'</script>");
@@ -86,6 +92,7 @@ public partial class Borrow1 : System.Web.UI.Page
                 string sql5 = "insert into tabBorrow1(bookname,writer,press,number,count,class1,name,nameID) values('" + bookname + "','" + writer + "','" + press + "','" + number + "','" + count1 + "','" + class1 + "','" + username + "','" + nameID + "')";
                 string sql1 = "update tabBooks set count='" + count2 + "' where bookname='" + bookname + "'";
                 string sql4 = "update tabUsers set bookcount= '" + count4 + "' where name='"+username +"'";
+                string sql9 = "select * from tabBorrow1 where bookname='" + bookname + "'";
                 long result = 0;
                 result = Class1.Put(sql1);
                 if (result == 1)
@@ -93,6 +100,13 @@ public partial class Borrow1 : System.Web.UI.Page
                     Class1.Put(sql);
                     Class1.Put(sql5);
                     Class1.Put(sql4);
+                    string datetime2 = Class1.Find2(sql9);
+                    DateTime.Parse(datetime2);
+                    DateTime datetime3 = DateTime.Now.AddDays(30);
+                    string sql10 = "update tabBorrow set datetime2='" + datetime3 + "' where bookname='"+bookname+"'";
+                    string sql11= "update tabBorrow1 set datetime2='" + datetime3 + "' where bookname='"+bookname+"'";
+                    Class1.Put(sql10);
+                    Class1.Put(sql11);
                     Response.Write("<script>alert('借阅成功！'),location='Borrowbook.aspx'</script>");
                 }
                 else Response.Write("<script>alert('借阅失败！'),location='Borrowbook.aspx'</script>");

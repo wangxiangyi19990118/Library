@@ -59,6 +59,7 @@ public partial class Return1 : System.Web.UI.Page
             DataTable dt = new DataTable();
             dt = Class1.Put1(sql2);
             string nameID = dt.Rows[0][5].ToString();
+            string bookcount=dt.Rows [0][8].ToString();
             string bookname = txtbookname.Text;
             string writer = txtwriter.Text;
             string press = txtpress.Text;
@@ -82,10 +83,11 @@ public partial class Return1 : System.Web.UI.Page
                 count2 += count1;
                 count3 -= count1;
                 long count4 = count2 - count1;
+                long count5 =Convert .ToInt64 (bookcount) - count1;
                 string sql = "update tabBorrow set count='" + count3 + "' where bookname='" + bookname + "'";
                 string sql5 = "delete from tabBorrow  where bookname='" + bookname + "'";
                 string sql1 = "update tabBooks set count='" + count2 + "' where bookname='" + bookname + "'";
-                string sql7 = "update tabUsers set count=count-'" + count1 + "'";
+                string sql7 = "update tabUsers set bookcount='" + count5 + "' where name='"+username +"'";
                 string sql8= "update tabBorrow1 set count='" + count3 + "' where bookname='" + bookname + "'";
                 string sql9 = "delete from tabBorrow1  where bookname='" + bookname + "'";
                 long result = Class1.Put(sql1);

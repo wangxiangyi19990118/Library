@@ -22,6 +22,8 @@
                         <th>编号</th>
                         <th>数量</th>
                         <th>分类</th>
+                         <th>借书日期</th>
+                         <th>还书日期</th>
                     </tr>
             </HeaderTemplate>
 
@@ -33,6 +35,8 @@
                      <td><%# Eval("number")%></td>
                      <td><%# Eval("count")%></td>
                      <td><%# Eval("class1")%></td>
+                    <td><%# Eval("datetime1")%></td>
+                    <td><%# Eval("datetime2")%></td>
                      <td><asp:LinkButton ID="lbtEditor" runat="server" Text="归还" PostBackUrl='<%#"Return1.aspx?id="+Eval("id") %>'></asp:LinkButton></td>
                      <asp:Button ID ="back" runat ="server" PostBackUrl="~/Welcome.aspx" Text ="返回" />
                </tr>
