@@ -33,7 +33,7 @@ public partial class Register : System.Web.UI.Page
             string sql = "insert into tabUsers values('" + name + "','" + pwd + "','" + sex + "','" + phone + "','" + nameID + "','"+question1 +"','"+answerpwd1 +"','"+0+"')";
             string sql1 = "select * from tabUsers where name='" + name + "'and pwd='" + pwd + "'and sex='" + sex + "' and phone='" + nameID + "'";
             string sql2 = "select * from tabUsers where phone='" + nameID + "'";
-            if (name.Length == 0 || pwd.Length == 0 || phone.Length == 0)//判断注册用户名和密码和手机号都不为空
+            if (name.Length == 0 || pwd.Length == 0 || phone.Length == 0||question1 .Length ==0||answerpwd1.Length ==0)//判断注册用户名和密码和手机号都不为空
             {
                 Response.Write("<script>alert('输入不为空！'),location=='Register.aspx'</script>");
             }

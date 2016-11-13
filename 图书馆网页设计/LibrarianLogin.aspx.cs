@@ -15,14 +15,19 @@ public partial class LibrarianLogin : System.Web.UI.Page
     {
         string name = txtname.Text;
         string pwd = txtpwd.Text;
-        string sql = "select * from tabLibrarian where name='" + name + "'and pwd='" + pwd + "'";
-        long result = 0;
-        result = Class1.Find(sql);
-        if (result == 1)
+        if (name.Length == 0 || pwd.Length == 0)
+            Response.Write("<script>alert('输入不为空！'),location=='LibrarianLogin.aspx'</script>");
+        else
         {
-            Session["name"] = name;
-            Response.Redirect("~/WelcomeLibrarian.aspx");
+            string sql = "select * from tabLibrarian where name='" + name + "'and pwd='" + pwd + "'";
+            long result = 0;
+            result = Class1.Find(sql);
+            if (result == 1)
+            {
+                Session["name"] = name;
+                Response.Redirect("~/WelcomeLibrarian.aspx");
+            }
+            else Response.Write("<script>alert('登录失败！用户名或密码错误'),location=='LibrarianLogin.aspx'</script>");
         }
-        else Response.Write("<script>alert('登录失败！用户名或密码错误'),location=='LibrarianLogin.aspx'</script>");
     }
 }
