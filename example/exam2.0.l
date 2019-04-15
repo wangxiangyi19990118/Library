@@ -15,31 +15,44 @@
 #define ID          20
 #define NUMBER      21
 #define RELOP       22
-
+#define IF          25
+#define ELSE        26
 #define NEWLINE     23
 #define ERRORCHAR   24
-
+#define AROP        27
 
 %}
 
  
 delim		[ \t \n]
 ws			{delim}+
-letter	[A-Za-z]
+letter	    [A-Za-z]
 digit		[0-9]
-id			{letter}({letter}|{digit})*
+id			_*{letter}({(_*|letter)}|{digit})*
 number	{digit}+(\.{digit}+)?(E[+-]?{digit}+)?
+left_big_bra \{
+right_big_bra \}
+left_small_bra \(
+right_small_bra \)
+semicoion ;
+assignment =
+
+
 
 /* 状态（或条件）定义可以定义在这里 
  * INITIAL是一个默认的状态，不需要定义
  */
 %s COMMENT
+%s s_COMMENT
 
 %%
 
-<INITIAL>"/*"						{BEGIN COMMENT;ECHO;}
-<COMMENT>"*/"						{BEGIN INITIAL;ECHO;}
-<COMMENT>.|\n						{ECHO;}
+<INITIAL>"/*"						{BEGIN COMMENT;}
+<COMMENT>"*/"						{BEGIN INITIAL;}
+<COMMENT>.|\n						{;}
+<INITIAL>"//"						{BEGIN s_COMMENT;}
+<s_COMMENT>\n						{BEGIN INITIAL;}
+<s_COMMENT>.*						{BEGIN INITIAL;}
 
  /* ECHO是一个宏，相当于 fprintf(yyout, "%s", yytext)*/
 
@@ -51,9 +64,14 @@ number	{digit}+(\.{digit}+)?(E[+-]?{digit}+)?
 <INITIAL>"<"	          {return (RELOP);}
 <INITIAL>"<="	          {return (RELOP);}
 <INITIAL>"="	          {return (RELOP);}
-<INITIAL>"<>"	          {return (RELOP);}
+<INITIAL>"!="	          {return (RELOP);}
 <INITIAL>">"	          {return (RELOP);}
 <INITIAL>">="	          {return (RELOP);}
+<INITIAL>"+"	          {return (AROP);}
+<INITIAL>"-"	          {return (AROP);}
+<INITIAL>"*"	          {return (AROP);}
+<INITIAL>"/"	          {return (AROP);}
+
 
 <INITIAL>.							{return ERRORCHAR;}
 
